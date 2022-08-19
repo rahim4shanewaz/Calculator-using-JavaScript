@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Dicount calculator</title>
+</head>
+<body>
+    <section class="p-20 bg-green-400 m-20 "> 
+        <h1 class="text-center text-3xl font-bold text-fuchsia-600">30% Discount!!</h1>
+        <div class="mt-10 bg-red-500 p-10">
+            <p class="text-3xl">Price <span id="price" class="font-bold">200</span>Tk</p>
+            <p id="coupon-note" class="text-xl text-white">Apply Coupon "DOM" for 30% Discount</p>
+            <input id="input" class="mt-2 block p-1" type="text" placeholder="Enter Valid Coupon">
+            <button id="button" disabled class="mt-2 bg-cyan-700 px-5 py-2 hover:bg-yellow-400 text-white font-bold">Apply Coupon</button>
+            <button id="cart-button" class="mt-2 bg-cyan-700 px-5 py-2 hover:bg-yellow-400 hidden  text-white font-bold">Add To Cart</button>
+            
+        </div>
+    </section>
+    <script>
+        document.getElementById('input').addEventListener('keyup', function(event){
+            const text = event.target.value;
+            const button = document.getElementById('button');
+            if(text === 'DOM'){
+                button.removeAttribute('disabled');
+            }
+            else{
+                button.setAttribute('disabled');
+            }
+        })
+        document.getElementById('button').addEventListener('click', function(){
+            const inputField = document.getElementById('input');
+            const getCoupon = inputField.value;
+            inputField.value = '';
+            const priceBox = document.getElementById('price')
+            const previousPriceString = priceBox.innerText;
+            const previousPrice = parseFloat(previousPriceString);
+            if(getCoupon === 'DOM'){
+               const discountAmount = (30/100) * previousPrice;
+               const newPrice = previousPrice - discountAmount;
+               priceBox.innerText = 'Discounted :' + newPrice;
+               inputField.style.display= 'none';
+               const coupontext = document.getElementById('coupon-note');
+               coupontext.style.display= 'none';
+               const applyButton = document.getElementById('button');
+               applyButton.style.display= 'none';
+               const cartButton = document.getElementById('cart-button');
+               cartButton.classList.remove('hidden');
+            }
+            
+
+        })
+    </script>  
+</body>
+</html>
